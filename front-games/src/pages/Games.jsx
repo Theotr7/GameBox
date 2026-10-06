@@ -10,6 +10,7 @@ const Games = () => {
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedDeveloper, setSelectedDeveloper] = useState("");
+  const [selectedSort, setSelectedSort] = useState("");
 
   const fetchGames = async () => {
     try {
@@ -44,6 +45,20 @@ const Games = () => {
       (!selectedGenre || game.genre === selectedGenre) &&
       (!selectedDeveloper || game.developer === selectedDeveloper),
   );
+
+  const sortedGames = [...filteredGames];
+
+  if (selectedSort === "title-asc") {
+    sortedGames.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (selectedSort === "title-desc") {
+    sortedGames.sort((a, b) => b.title.localeCompare(a.title));
+  }
+
+  if (selectedSort === "date-asc") {
+    sortedGames.sort((a, b) => a.releaseDate.localeCompare(b.releaseDate));
+  } else if (selectedSort === "date-desc") {
+    sortedGames.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
+  }
 
   return (
     <main className="games">
@@ -108,6 +123,23 @@ const Games = () => {
             </option>
           ))}
         </select>
+
+        <label className="games__label" htmlFor="sort-games">
+          Trier les jeux
+        </label>
+
+        <select
+          className="games__select"
+          id="sort-games"
+          value={selectedSort}
+          onChange={(event) => setSelectedSort(event.target.value)}
+        >
+          <option value="">Aucun tri</option>
+          <option value="title-asc">Titre croissant</option>
+          <option value="title-desc">Titre décroissant</option>
+          <option value="date-asc">Date croissante</option>
+          <option value="date-desc">Date décroissante</option>
+        </select>
       </div>
 
       {loading ? (
@@ -118,7 +150,7 @@ const Games = () => {
         <p className="games__message">Aucun jeu n’est disponible.</p>
       ) : (
         <section className="games__grid">
-          {filteredGames.map((game) => (
+          {sortedGames.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
         </section>
