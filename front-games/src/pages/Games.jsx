@@ -7,6 +7,9 @@ const Games = () => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedDeveloper, setSelectedDeveloper] = useState("");
 
   const fetchGames = async () => {
     try {
@@ -29,11 +32,23 @@ const Games = () => {
     fetchGames();
   }, []);
 
+  const availableGenres = [...new Set(games.map((game) => game.genre))].sort();
+
+  const availableDevelopers = [
+    ...new Set(games.map((game) => game.developer)),
+  ].sort();
+
+  const filteredGames = games.filter(
+    (game) =>
+      game.title.toLowerCase().includes(search.trim().toLowerCase()) &&
+      (!selectedGenre || game.genre === selectedGenre) &&
+      (!selectedDeveloper || game.developer === selectedDeveloper),
+  );
+
   return (
     <main className="games">
       <header className="games__header">
         <h1 className="games__title">Liste des jeux</h1>
-
         <Link
           className="games__create-link button button--primary"
           to="/games/add"
@@ -41,6 +56,59 @@ const Games = () => {
           Ajouter un jeu
         </Link>
       </header>
+
+      <div className="games__controls">
+        <label className="games__label" htmlFor="game-search">
+          Rechercher un jeu
+        </label>
+
+        <input
+          className="games__search"
+          id="game-search"
+          type="text"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder="Entrez le titre du jeu"
+        />
+
+        <label className="games__label" htmlFor="genre-filter">
+          Sélectionner un genre
+        </label>
+
+        <select
+          className="games__select"
+          id="genre-filter"
+          value={selectedGenre}
+          onChange={(event) => setSelectedGenre(event.target.value)}
+        >
+          <option value="">Tous les genres</option>
+
+          {availableGenres.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+
+        <label className="games__label" htmlFor="developer-filter">
+          Sélectionner un studio de developpement
+        </label>
+
+        <select
+          className="games__select"
+          id="developer-filter"
+          value={selectedDeveloper}
+          onChange={(event) => setSelectedDeveloper(event.target.value)}
+        >
+          <option value="">Tous les studios de développement</option>
+
+          {availableDevelopers.map((developer) => (
+            <option key={developer} value={developer}>
+              {developer}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {loading ? (
         <p className="games__message">Chargement des jeux...</p>
@@ -50,8 +118,8 @@ const Games = () => {
         <p className="games__message">Aucun jeu n’est disponible.</p>
       ) : (
         <section className="games__grid">
-          {games.map((game) => (
-            <GameCard game={game} />
+          {filteredGames.map((game) => (
+            <GameCard key={game.id} game={game} />
           ))}
         </section>
       )}
