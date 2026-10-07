@@ -1,11 +1,31 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
+import FavoriteButton from "../components/FavoriteButton";
 // import "../styles/components/detail.css";
 
 const GameDetail = () => {
   const { id } = useParams();
 
   const [game, setGame] = useState(null);
+
+  const navigate = useNavigate();
+
+  //Confimation pour supprimer + méthode pour supprimer
+  const handleDelete = async () => {
+    const confirmation = window.confirm(
+      "Êtes-vous sur de vouloir supprimer ce jeu ?",
+    );
+    if (!confirmation) {
+      return;
+    }
+
+    const response = await fetch(`http://localhost:3000/games/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      navigate("/games");
+    }
+  };
 
   const fetchGame = async () => {
     const response = await fetch(`http://localhost:3000/games/${id}`);
@@ -58,6 +78,7 @@ const GameDetail = () => {
           </div>
 
           <div className="game-detail__actions">
+            <FavoriteButton gameId={game.id} variant="text" />
             <button className="button button--primary" type="button">
               Ajouter à mon espace
             </button>
@@ -69,7 +90,11 @@ const GameDetail = () => {
               Modifier
             </Link>
 
-            <button className="button button--danger" type="button">
+            <button
+              className="button button--danger"
+              type="button"
+              onClick={handleDelete}
+            >
               Supprimer
             </button>
 
