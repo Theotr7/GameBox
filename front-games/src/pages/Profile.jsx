@@ -79,6 +79,14 @@ function Profile() {
     (game) => game.status === "abandoned",
   );
 
+  const reviewedGames = trackingGames.filter((game) => {
+    return (
+      (game.status === "completed" || game.status === "abandoned") &&
+      game.rating !== null &&
+      game.review.trim() !== ""
+    );
+  });
+
   const handleFavoriteChange = (gameId, isFavorite) => {
     if (!isFavorite) {
       setFavoriteGames((games) => games.filter((game) => game.id !== gameId));
@@ -220,6 +228,27 @@ function Profile() {
               <GameCard
                 key={game.id}
                 game={game}
+                onTrackingEdit={() => handleTrackingClick(game.id)}
+                onTrackingDelete={() => handleTrackingDelete(game.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="profile__reviews">
+        <h2 className="profile__subtitle">Mes notes & avis</h2>
+        {reviewedGames.length === 0 ? (
+          <p className="profile__message">
+            Vous n'avez pas encore de jeux notés et avec un avis.
+          </p>
+        ) : (
+          <div className="profile__review-grid">
+            {reviewedGames.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                showReview={true}
                 onTrackingEdit={() => handleTrackingClick(game.id)}
                 onTrackingDelete={() => handleTrackingDelete(game.id)}
               />

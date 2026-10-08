@@ -1,11 +1,13 @@
 import { Link } from "react-router";
 import FavoriteButton from "./FavoriteButton";
 import TrackingButton from "./TrackingButton";
+import Rating from "./Rating";
 import { FaPenToSquare, FaXmark } from "react-icons/fa6";
 
 const GameCard = ({
   game,
   showFavorite,
+  showReview,
   onFavoriteChange,
   onTrackingChange,
   onTrackingEdit,
@@ -22,8 +24,17 @@ const GameCard = ({
 
       <div className="game-card__content">
         <h2 className="game-card__title">{game.title}</h2>
-        <p className="game-card__genre">{game.genre}</p>
-        <p className="game-card__platform">{game.platform}</p>
+        {showReview ? (
+          <>
+            <Rating rating={game.rating} readOnly />
+            <p>{game.review}</p>
+          </>
+        ) : (
+          <>
+            <p className="game-card__genre">{game.genre}</p>
+            <p className="game-card__platform">{game.platform}</p>
+          </>
+        )}
       </div>
     </>
   );
