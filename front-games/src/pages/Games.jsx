@@ -151,7 +151,7 @@ const Games = () => {
       ) : (
         <section className="games__grid">
           {sortedGames.map((game) => (
-            <GameCard key={game.id} game={game} />
+            <GameCard key={game.id} game={game} showFavorite={true} />
           ))}
         </section>
       )}

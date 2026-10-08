@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 import FavoriteButton from "../components/FavoriteButton";
+import TrackingButton from "../components/TrackingButton";
 // import "../styles/components/detail.css";
 
 const GameDetail = () => {
@@ -78,10 +79,8 @@ const GameDetail = () => {
           </div>
 
           <div className="game-detail__actions">
+            <TrackingButton gameId={game.id} />
             <FavoriteButton gameId={game.id} variant="text" />
-            <button className="button button--primary" type="button">
-              Ajouter à mon espace
-            </button>
 
             <Link
               className="button button--secondary"

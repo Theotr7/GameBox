@@ -1,27 +1,117 @@
 import { useState, useEffect } from "react";
 import GameCard from "../components/GameCard";
+import TrackingModal from "../components/TrackingModal";
 
 function Profile() {
   const [favoriteGames, setFavoriteGames] = useState([]);
+  const [trackingGames, setTrackingGames] = useState([]);
+  const [selectedGame, setSelectedGame] = useState(null);
+
+  const loadProfileGames = async () => {
+    const favorites =
+      JSON.parse(localStorage.getItem("gamebox_favorites")) || [];
+
+    const tracking = JSON.parse(localStorage.getItem("gamebox_tracking")) || [];
+
+    const response = await fetch("http://localhost:3000/games");
+    const games = await response.json();
+
+    const filteredGames = games.filter((game) => favorites.includes(game.id));
+    setFavoriteGames(filteredGames);
+
+    const filteredTrackingGames = games
+      .filter((game) =>
+        tracking.some((trackingGame) => trackingGame.gameId === game.id),
+      )
+      .map((game) => {
+        const trackingGame = tracking.find(
+          (trackingGame) => trackingGame.gameId === game.id,
+        );
+        return {
+          ...game,
+          status: trackingGame.status,
+          rating: trackingGame.rating,
+          review: trackingGame.review,
+        };
+      });
+    setTrackingGames(filteredTrackingGames);
+  };
 
   useEffect(() => {
-    const loadFavorites = async () => {
-      const favorites =
-        JSON.parse(localStorage.getItem("gamebox_favorites")) || [];
-
-      const response = await fetch("http://localhost:3000/games");
-      const games = await response.json();
-
-      const filteredGames = games.filter((game) => favorites.includes(game.id));
-      setFavoriteGames(filteredGames);
-    };
-    loadFavorites();
+    loadProfileGames();
   }, []);
+
+  const incompleteGames = trackingGames.filter((game) => {
+    if (game.status === "") {
+      return true;
+    }
+
+    if (game.status === "completed" || game.status === "abandoned") {
+      return game.rating === null || game.review.trim() === "";
+    }
+    return false;
+  });
+
+  const completedGames = trackingGames.filter((game) => {
+    if (game.status === "") {
+      return false;
+    }
+
+    if (game.status === "completed" || game.status === "abandoned") {
+      return game.rating !== null && game.review.trim() !== "";
+    }
+    return true;
+  });
+
+  const completedCategory = completedGames.filter(
+    (game) => game.status === "completed",
+  );
+
+  const inProgressCategory = completedGames.filter(
+    (game) => game.status === "in-progress",
+  );
+
+  const toPlayCategory = completedGames.filter(
+    (game) => game.status === "to-play",
+  );
+
+  const abandonedCategory = completedGames.filter(
+    (game) => game.status === "abandoned",
+  );
 
   const handleFavoriteChange = (gameId, isFavorite) => {
     if (!isFavorite) {
       setFavoriteGames((games) => games.filter((game) => game.id !== gameId));
     }
+  };
+
+  const handleTrackingClick = (gameId) => {
+    const game = trackingGames.find((game) => game.id === gameId);
+
+    setSelectedGame(game);
+  };
+
+  const handleTrackingDelete = (gameId) => {
+    const confirmation = window.confirm(
+      "Êtes-vous sûr de vouloir retirer ce jeu de votre suivi ?",
+    );
+
+    if (!confirmation) {
+      return;
+    }
+
+    const tracking = JSON.parse(localStorage.getItem("gamebox_tracking")) || [];
+
+    const updatedTracking = tracking.filter(
+      (trackingGame) => trackingGame.gameId !== gameId,
+    );
+
+    localStorage.setItem("gamebox_tracking", JSON.stringify(updatedTracking));
+    loadProfileGames();
+  };
+
+  const handleCloseTrackingModal = () => {
+    setSelectedGame(null);
   };
 
   return (
@@ -39,12 +129,112 @@ function Profile() {
               <GameCard
                 key={game.id}
                 game={game}
+                showFavorite={true}
                 onFavoriteChange={handleFavoriteChange}
               />
             ))}
           </div>
         )}
       </section>
+
+      <section className="profile__tracking">
+        <h2 className="profile__subtitle">À compléter</h2>
+
+        {incompleteGames.length === 0 ? (
+          <p className="profile__message">Vous n'avez aucun jeu à compléter.</p>
+        ) : (
+          <div className="profile__tracking-grid">
+            {incompleteGames.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                onClick={() => handleTrackingClick(game.id)}
+                onTrackingDelete={() => handleTrackingDelete(game.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="profile__games">
+        <h2 className="profile__subtitle">Terminés</h2>
+        {completedCategory.length === 0 ? (
+          <p className="profile__message">Vous n'avez aucun jeu terminé.</p>
+        ) : (
+          <div className="profile__games-grid">
+            {completedCategory.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                onTrackingEdit={() => handleTrackingClick(game.id)}
+                onTrackingDelete={() => handleTrackingDelete(game.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="profile__games">
+        <h2 className="profile__subtitle">En cours</h2>
+        {inProgressCategory.length === 0 ? (
+          <p className="profile__message">Vous n'avez aucun jeu en cours.</p>
+        ) : (
+          <div className="profile__games-grid">
+            {inProgressCategory.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                onTrackingEdit={() => handleTrackingClick(game.id)}
+                onTrackingDelete={() => handleTrackingDelete(game.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="profile__games">
+        <h2 className="profile__subtitle">À jouer</h2>
+        {toPlayCategory.length === 0 ? (
+          <p className="profile__message">Vous n'avez aucun jeu à jouer.</p>
+        ) : (
+          <div className="profile__games-grid">
+            {toPlayCategory.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                onTrackingEdit={() => handleTrackingClick(game.id)}
+                onTrackingDelete={() => handleTrackingDelete(game.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="profile__games">
+        <h2 className="profile__subtitle">Abandonnés</h2>
+        {abandonedCategory.length === 0 ? (
+          <p className="profile__message">Vous n'avez aucun jeu abandonnés.</p>
+        ) : (
+          <div className="profile__games-grid">
+            {abandonedCategory.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                onTrackingEdit={() => handleTrackingClick(game.id)}
+                onTrackingDelete={() => handleTrackingDelete(game.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {selectedGame && (
+        <TrackingModal
+          game={selectedGame}
+          onClose={handleCloseTrackingModal}
+          onSave={loadProfileGames}
+        />
+      )}
     </main>
   );
 }
