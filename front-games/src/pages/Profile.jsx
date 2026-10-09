@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import GameCard from "../components/GameCard";
 import TrackingModal from "../components/TrackingModal";
+import Statistics from "../components/Statistics";
 
 function Profile() {
   const [favoriteGames, setFavoriteGames] = useState([]);
@@ -125,6 +126,19 @@ function Profile() {
   return (
     <main className="profile">
       <h1 className="profile__title">Mon espace</h1>
+      <Statistics
+        trackingCount={trackingGames.length}
+        completedCount={completedCategory.length}
+        inProgressCount={inProgressCategory.length}
+        toPlayCount={toPlayCategory.length}
+        abandonedCount={abandonedCategory.length}
+        averageRating={
+          reviewedGames.length > 0
+            ? reviewedGames.reduce((total, game) => total + game.rating, 0) /
+              reviewedGames.length
+            : 0
+        }
+      />
 
       <section className="profile__favorites">
         <h2 className="profile__subtitle">Mes favoris</h2>
