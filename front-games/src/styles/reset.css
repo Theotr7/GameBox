@@ -21,6 +21,7 @@ ol {
 
 a {
   color: inherit;
+  font: inherit;
   text-decoration: none;
 }
 

@@ -1,0 +1,80 @@
+:root {
+  /*Couleurs principales*/
+  --color-background: #0b0b12;
+  --color-surface: #171722;
+  --color-surface-light: #222233;
+
+  /*Textes*/
+  --color-text: #e8e8f0;
+  --color-text-heading: #ffffff;
+  --color-text-muted: #a5a5ba;
+
+  /*Violet*/
+  --color-primary: #8b5cf6;
+  --color-primary-light: #a78bfa;
+  --color-primary-dark: #6d28d9;
+
+  /*Bordures*/
+  --color-border: #343449;
+
+  /*Danger*/
+  --color-danger: #ef4444;
+
+  /*Polices*/
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-heading: "Trebuchet MS", sans-serif;
+
+  /*Largeurs*/
+  --container-width: 1120px;
+  --content-width: 800px;
+
+  /*Espacements*/
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+
+  /*Arrondis*/
+  --radius-small: 2px;
+  --radius-medium: 6px;
+  --radius-large: 12px;
+
+  /*Ombres*/
+  --shadow-small: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-large: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-primary: 0 4px 16px rgba(139, 92, 246, 0.2);
+
+  /*Transitions*/
+  --transition-fast: 180ms ease;
+  --transition-normal: 300ms ease;
+}
+
+html {
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-family: var(--font-body);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+}
+
+textarea,
+select {
+  font: inherit;
+}
