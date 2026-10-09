@@ -1,0 +1,99 @@
+/*-----------------------------------------
+HEADER
+------------------------------------------*/
+
+/* ── MOBILE ── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.header__logo-image {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.header__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.header__link {
+  padding: var(--space-xs);
+  color: var(--color-text-heading);
+  border-radius: var(--radius-medium);
+  font-size: 0.9rem;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.header__link:hover {
+  color: var(--color-primary-light);
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary-light);
+  text-underline-offset: 4px;
+}
+
+.header__link:focus-visible,
+.header__logo:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 4px;
+}
+
+/* ── TABLET ≥ 48em ── */
+
+@media (min-width: 48em) {
+  .header {
+    padding: var(--space-md);
+  }
+
+  .header__logo {
+    font-size: 1.6rem;
+  }
+
+  .header__logo-image {
+    width: 42px;
+    height: 42px;
+  }
+
+  .header__navigation {
+    gap: var(--space-lg);
+  }
+
+  .header__link {
+    font-size: 1rem;
+  }
+}
+
+/* ── DESKTOP ≥ 64em ── */
+
+@media (min-width: 64em) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .header__navigation {
+    gap: var(--space-lg);
+  }
+}

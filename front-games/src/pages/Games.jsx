@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import GameCard from "../components/GameCard";
-// import "../styles/components/cards.css";
 
 const Games = () => {
   const [games, setGames] = useState([]);
@@ -73,73 +72,81 @@ const Games = () => {
       </header>
 
       <div className="games__controls">
-        <label className="games__label" htmlFor="game-search">
-          Rechercher un jeu
-        </label>
+        <div className="games__control">
+          <label className="games__label" htmlFor="game-search">
+            Rechercher un jeu
+          </label>
 
-        <input
-          className="games__search"
-          id="game-search"
-          type="text"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Entrez le titre du jeu"
-        />
+          <input
+            className="games__search"
+            id="game-search"
+            type="text"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Entrez le titre du jeu"
+          />
+        </div>
 
-        <label className="games__label" htmlFor="genre-filter">
-          Sélectionner un genre
-        </label>
+        <div className="games__control">
+          <label className="games__label" htmlFor="genre-filter">
+            Genre
+          </label>
 
-        <select
-          className="games__select"
-          id="genre-filter"
-          value={selectedGenre}
-          onChange={(event) => setSelectedGenre(event.target.value)}
-        >
-          <option value="">Tous les genres</option>
+          <select
+            className="games__select"
+            id="genre-filter"
+            value={selectedGenre}
+            onChange={(event) => setSelectedGenre(event.target.value)}
+          >
+            <option value="">Tous les genres</option>
 
-          {availableGenres.map((genre) => (
-            <option key={genre} value={genre}>
-              {genre}
-            </option>
-          ))}
-        </select>
+            {availableGenres.map((genre) => (
+              <option key={genre} value={genre}>
+                {genre}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <label className="games__label" htmlFor="developer-filter">
-          Sélectionner un studio de developpement
-        </label>
+        <div className="games__control">
+          <label className="games__label" htmlFor="developer-filter">
+            Studio de développement
+          </label>
 
-        <select
-          className="games__select"
-          id="developer-filter"
-          value={selectedDeveloper}
-          onChange={(event) => setSelectedDeveloper(event.target.value)}
-        >
-          <option value="">Tous les studios de développement</option>
+          <select
+            className="games__select"
+            id="developer-filter"
+            value={selectedDeveloper}
+            onChange={(event) => setSelectedDeveloper(event.target.value)}
+          >
+            <option value="">Tous les studios de développement</option>
 
-          {availableDevelopers.map((developer) => (
-            <option key={developer} value={developer}>
-              {developer}
-            </option>
-          ))}
-        </select>
+            {availableDevelopers.map((developer) => (
+              <option key={developer} value={developer}>
+                {developer}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <label className="games__label" htmlFor="sort-games">
-          Trier les jeux
-        </label>
+        <div className="games__control">
+          <label className="games__label" htmlFor="sort-games">
+            Trier les jeux
+          </label>
 
-        <select
-          className="games__select"
-          id="sort-games"
-          value={selectedSort}
-          onChange={(event) => setSelectedSort(event.target.value)}
-        >
-          <option value="">Aucun tri</option>
-          <option value="title-asc">Titre croissant</option>
-          <option value="title-desc">Titre décroissant</option>
-          <option value="date-asc">Date croissante</option>
-          <option value="date-desc">Date décroissante</option>
-        </select>
+          <select
+            className="games__select"
+            id="sort-games"
+            value={selectedSort}
+            onChange={(event) => setSelectedSort(event.target.value)}
+          >
+            <option value="">Aucun tri</option>
+            <option value="title-asc">Titre croissant</option>
+            <option value="title-desc">Titre décroissant</option>
+            <option value="date-asc">Date croissante</option>
+            <option value="date-desc">Date décroissante</option>
+          </select>
+        </div>
       </div>
 
       {loading ? (

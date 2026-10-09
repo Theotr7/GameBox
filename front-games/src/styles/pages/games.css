@@ -1,0 +1,127 @@
+/*-----------------------------------------
+GAMES PAGE
+------------------------------------------*/
+
+/*-----------------------------------------
+EN-TÊTE
+------------------------------------------*/
+
+/* ── MOBILE ── */
+
+.games__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.games__title {
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+}
+
+
+/*-----------------------------------------
+FILTRES
+------------------------------------------*/
+
+.games__controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+.games__control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.games__label {
+  color: var(--color-primary-light);
+  font-size: 0.9rem;
+}
+
+.games__search,
+.games__select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px var(--space-sm);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  font: inherit;
+}
+
+.games__search:hover,
+.games__select:hover {
+  border-color: var(--color-primary-light);
+}
+
+.games__search:focus,
+.games__select:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/*-----------------------------------------
+GAMES GRID
+------------------------------------------*/
+
+.games__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+/* ── TABLET ≥ 48em ── */
+
+@media (min-width: 48em) {
+  .games__header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .games__title {
+    font-size: 2.2rem;
+  }
+
+  .games__controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .games__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+}
+
+/* ── DESKTOP ≥ 64em ── */
+
+@media (min-width: 64em) {
+  .games__header {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--space-lg) 0 var(--space-md);
+  }
+
+  .games__controls {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: var(--container-width);
+    margin: 0 auto;
+  }
+
+  .games__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: var(--container-width);
+    margin: 0 auto;
+  }
+}

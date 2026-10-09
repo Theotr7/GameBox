@@ -1,0 +1,46 @@
+/*-----------------------------------------
+FAVORITE BUTTON
+------------------------------------------*/
+
+.favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--color-text);
+  border-radius: var(--radius-medium);
+  background-color: var(--color-surface-light);
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.favorite-button--icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgba(11, 11, 18, 0.85);
+}
+
+.favorite-button--icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.favorite-button--active {
+  color: var(--color-primary-light);
+}
+
+.favorite-button:hover {
+  color: var(--color-primary-light);
+  background-color: var(--color-surface-light);
+  transform: scale(1.08);
+}
+
+.favorite-button:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 3px;
+}

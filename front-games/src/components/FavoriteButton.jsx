@@ -41,7 +41,13 @@ const FavoriteButton = ({ gameId, variant, onFavoriteChange }) => {
   };
 
   return (
-    <button type="button" onClick={handleFavorite}>
+    <button
+      type="button"
+      className={`favorite-button ${
+        variant === "icon" ? "favorite-button--icon" : ""
+      } ${isFavorite ? "favorite-button--active" : ""}`}
+      onClick={handleFavorite}
+    >
       {variant === "icon" ? (
         isFavorite ? (
           <FaHeart />
