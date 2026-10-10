@@ -31,11 +31,6 @@ BUTTONS
   background-color: var(--color-primary-dark);
 }
 
-.button:focus-visible {
-  outline: 2px solid var(--color-primary-light);
-  outline-offset: 3px;
-}
-
 /*-----------------------------------------
 SECONDARY BUTTON
 ------------------------------------------*/

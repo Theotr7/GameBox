@@ -76,11 +76,6 @@ GAME CARD
   line-height: 1.5;
 }
 
-.game-card__link:focus-visible {
-  outline: 2px solid var(--color-primary-light);
-  outline-offset: -2px;
-}
-
 .game-card > .favorite-button--icon {
   position: absolute;
   top: var(--space-xs);

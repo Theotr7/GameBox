@@ -46,6 +46,7 @@ FILTRES
 .games__label {
   color: var(--color-primary-light);
   font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .games__search,
@@ -67,8 +68,8 @@ FILTRES
 
 .games__search:focus,
 .games__select:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  border-color: var(--color-primary);
+  outline: none;
 }
 
 /*-----------------------------------------

@@ -1,0 +1,103 @@
+/*-----------------------------------------
+TRACKING MODAL
+------------------------------------------*/
+
+/* ── MOBILE ── */
+
+.tracking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm);
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.tracking-modal__content {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-large);
+}
+
+.tracking-modal__title {
+  width: fit-content;
+  color: var(--color-text-heading);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.tracking-modal__game-title {
+  color: var(--color-primary-light);
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/*-----------------------------------------
+TRACKING MODAL FIELDS
+------------------------------------------*/
+
+.tracking-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.tracking-modal__label {
+  color: var(--color-primary-light);
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.tracking-modal__select,
+.tracking-modal__textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px var(--space-sm);
+  color: var(--color-text);
+  background-color: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  font: inherit;
+}
+
+.tracking-modal__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.tracking-modal__select:hover,
+.tracking-modal__textarea:hover {
+  border-color: var(--color-primary-light);
+}
+
+.tracking-modal__select:focus,
+.tracking-modal__textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/*-----------------------------------------
+TRACKING MODAL ACTIONS
+------------------------------------------*/
+
+.tracking-modal__actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.tracking-modal__actions .button {
+  flex: 1;
+}

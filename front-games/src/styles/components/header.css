@@ -52,12 +52,6 @@ HEADER
   text-underline-offset: 4px;
 }
 
-.header__link:focus-visible,
-.header__logo:focus-visible {
-  outline: 2px solid var(--color-primary-light);
-  outline-offset: 4px;
-}
-
 /* ── TABLET ≥ 48em ── */
 
 @media (min-width: 48em) {

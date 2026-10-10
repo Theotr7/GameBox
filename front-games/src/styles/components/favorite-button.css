@@ -34,8 +34,3 @@ FAVORITE BUTTON
   background-color: var(--color-surface-light);
   transform: translateY(-2px);
 }
-
-.favorite-button--icon:focus-visible {
-  outline: 2px solid var(--color-primary-light);
-  outline-offset: 3px;
-}

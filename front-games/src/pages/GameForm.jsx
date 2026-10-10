@@ -14,6 +14,7 @@ const GameForm = () => {
   const [releaseDate, setReleaseDate] = useState("");
   const [platform, setPlatform] = useState("");
   const [image, setImage] = useState("");
+  const [banner, setBanner] = useState("");
   const [errors, setErrors] = useState({
     title: "",
     description: "",
@@ -22,6 +23,7 @@ const GameForm = () => {
     releaseDate: "",
     platform: "",
     image: "",
+    banner: "",
   });
 
   const validateField = (field, value) => {
@@ -50,6 +52,7 @@ const GameForm = () => {
     setReleaseDate(data.releaseDate.split("T")[0]);
     setPlatform(data.platform);
     setImage(data.image);
+    setBanner(data.banner);
   };
 
   useEffect(() => {
@@ -60,6 +63,28 @@ const GameForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const fields = {
+      title: "",
+      description: "",
+      genre: "",
+      developer: "",
+      releaseDate: "",
+      platform: "",
+      image: "",
+      banner: "",
+    };
+
+    const newErrors = {};
+
+    Object.entries(fields).forEach(([field, value]) => {
+      newErrors[field] = value.trim() === "" ? "Ce champ est obligatoire" : "";
+    });
+
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some((error) => error !== "");
+    if (hasErrors) return;
 
     const response = await fetch(
       isEdit
@@ -78,6 +103,7 @@ const GameForm = () => {
           releaseDate,
           platform,
           image,
+          banner,
         }),
       },
     );
@@ -97,7 +123,7 @@ const GameForm = () => {
         {isEdit ? "Modifier le jeu" : "Ajouter le jeu"}
       </h1>
 
-      <form className="game-form__form" onSubmit={handleSubmit}>
+      <form className="game-form__form" onSubmit={handleSubmit} noValidate>
         <div className="game-form__field">
           <label className="game-form__label" htmlFor="title">
             Titre
@@ -114,7 +140,7 @@ const GameForm = () => {
             }}
             required
           />
-          {errors.title && <p>{errors.title}</p>}
+          {errors.title && <p className="game-form__error">{errors.title}</p>}
         </div>
 
         <div className="game-form__field">
@@ -132,7 +158,9 @@ const GameForm = () => {
             }}
             required
           />
-          {errors.description && <p>{errors.description}</p>}
+          {errors.description && (
+            <p className="game-form__error">{errors.description}</p>
+          )}
         </div>
 
         <div className="game-form__field">
@@ -151,7 +179,7 @@ const GameForm = () => {
             }}
             required
           />
-          {errors.genre && <p>{errors.genre}</p>}
+          {errors.genre && <p className="game-form__error">{errors.genre}</p>}
         </div>
 
         <div className="game-form__field">
@@ -170,7 +198,9 @@ const GameForm = () => {
             }}
             required
           />
-          {errors.developer && <p>{errors.developer}</p>}
+          {errors.developer && (
+            <p className="game-form__error">{errors.developer}</p>
+          )}
         </div>
 
         <div className="game-form__field">
@@ -189,7 +219,9 @@ const GameForm = () => {
             }}
             required
           />
-          {errors.releaseDate && <p>{errors.releaseDate}</p>}
+          {errors.releaseDate && (
+            <p className="game-form__error">{errors.releaseDate}</p>
+          )}
         </div>
 
         <div className="game-form__field">
@@ -208,7 +240,9 @@ const GameForm = () => {
             }}
             required
           />
-          {errors.platform && <p>{errors.platform}</p>}
+          {errors.platform && (
+            <p className="game-form__error">{errors.platform}</p>
+          )}
         </div>
 
         <div className="game-form__field">
@@ -227,7 +261,26 @@ const GameForm = () => {
             }}
             placeholder="/images/nom-du-jeu.jpg"
           />
-          {errors.image && <p>{errors.image}</p>}
+          {errors.image && <p className="game-form__error">{errors.image}</p>}
+        </div>
+
+        <div className="game-form__field">
+          <label className="game-form__label" htmlFor="banner">
+            Chemin de la bannière
+          </label>
+
+          <input
+            className="game-form__input"
+            type="text"
+            id="banner"
+            value={banner}
+            onChange={(event) => {
+              setBanner(event.target.value);
+              validateField("banner", event.target.value);
+            }}
+            placeholder="/images/banner-nom-du-jeu.jpg"
+          />
+          {errors.banner && <p className="game-form__error">{errors.banner}</p>}
         </div>
 
         <div className="game-form__actions">

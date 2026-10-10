@@ -1,0 +1,30 @@
+/*-----------------------------------------
+RATING
+------------------------------------------*/
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.rating__star,
+.rating__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbbf24;
+  font-size: 1.5rem;
+}
+
+.rating__button {
+  padding: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.rating__button:hover {
+  transform: scale(1.2);
+}
