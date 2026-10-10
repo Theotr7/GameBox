@@ -65,14 +65,14 @@ const GameForm = () => {
     event.preventDefault();
 
     const fields = {
-      title: "",
-      description: "",
-      genre: "",
-      developer: "",
-      releaseDate: "",
-      platform: "",
-      image: "",
-      banner: "",
+      title,
+      description,
+      genre,
+      developer,
+      releaseDate,
+      platform,
+      image,
+      banner,
     };
 
     const newErrors = {};
