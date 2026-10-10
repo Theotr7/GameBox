@@ -20,7 +20,7 @@ class GameController {
     }
 
     createGame = async (req, res) => {
-        const { title, description, genre, developer, releaseDate, platform, image } = req.body;
+        const { title, description, genre, developer, releaseDate, platform, image, banner } = req.body;
 
         const game = await Game.create({
             title,
@@ -29,7 +29,8 @@ class GameController {
             developer,
             releaseDate,
             platform,
-            image
+            image,
+            banner
         });
 
         return res.json(game);

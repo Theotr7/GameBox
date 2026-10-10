@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 
 const TrackingButton = ({ gameId, onTrackingChange }) => {
   const [isTracking, setIsTracking] = useState(false);
@@ -43,7 +44,12 @@ const TrackingButton = ({ gameId, onTrackingChange }) => {
   };
 
   return (
-    <button type="button" onClick={handleTracking}>
+    <button
+      className="button button--primary"
+      type="button"
+      onClick={handleTracking}
+    >
+      {isTracking ? <FaMinus /> : <FaPlus />}
       {isTracking ? "Retirer de mon espace" : "Ajouter à mon espace"}
     </button>
   );

@@ -17,6 +17,10 @@
   /*Bordures*/
   --color-border: #343449;
 
+  /*Edit*/
+  --color-edit: #22c55e;
+  --color-background-edit: #16a34a;
+
   /*Danger*/
   --color-danger: #ef4444;
 

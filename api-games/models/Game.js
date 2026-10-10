@@ -29,6 +29,10 @@ const Game = db.define("Game", {
     image: {
     type: DataTypes.STRING,
     allowNull: false
+},
+    banner: {
+    type: DataTypes.STRING,
+    allowNull: true
 }
 });
 

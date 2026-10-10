@@ -44,22 +44,13 @@ const FavoriteButton = ({ gameId, variant, onFavoriteChange }) => {
     <button
       type="button"
       className={`favorite-button ${
-        variant === "icon" ? "favorite-button--icon" : ""
+        variant === "icon" ? "favorite-button--icon" : "button button--primary"
       } ${isFavorite ? "favorite-button--active" : ""}`}
       onClick={handleFavorite}
     >
-      {variant === "icon" ? (
-        isFavorite ? (
-          <FaHeart />
-        ) : (
-          <FaRegHeart />
-        )
-      ) : (
-        <>
-          {isFavorite ? <FaHeart /> : <FaRegHeart />}
-          {isFavorite ? "Retirer de mes favoris" : "Ajouter à mes favoris"}
-        </>
-      )}
+      {isFavorite ? <FaHeart /> : <FaRegHeart />}
+      {variant !== "icon" &&
+        (isFavorite ? "Retirer de mes favoris" : "Ajouter à mes favoris")}
     </button>
   );
 };

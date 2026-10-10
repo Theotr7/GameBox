@@ -19,16 +19,59 @@ BUTTONS
     transform var(--transition-fast);
 }
 
+.button:hover {
+  transform: translateY(-2px);
+}
+
 .button--primary {
   background-color: var(--color-primary);
 }
 
 .button--primary:hover {
   background-color: var(--color-primary-dark);
-  transform: translateY(-2px);
 }
 
 .button:focus-visible {
   outline: 2px solid var(--color-primary-light);
   outline-offset: 3px;
+}
+
+/*-----------------------------------------
+SECONDARY BUTTON
+------------------------------------------*/
+
+.button--secondary {
+  background-color: var(--color-surface-light);
+}
+
+.button--secondary:hover {
+  background-color: var(--color-border);
+}
+
+/*-----------------------------------------
+EDIT BUTTON
+------------------------------------------*/
+
+.button--edit {
+  color: var(--color-edit);
+  background-color: var(--color-surface-light);
+}
+
+.button--edit:hover {
+  color: var(--color-text-heading);
+  background-color: var(--color-background-edit);
+}
+
+/*-----------------------------------------
+DANGER BUTTON
+------------------------------------------*/
+
+.button--danger {
+  color: var(--color-danger);
+  background-color: var(--color-surface-light);
+}
+
+.button--danger:hover {
+  background-color: var(--color-danger);
+  color: var(--color-text-heading);
 }
