@@ -1,3 +1,5 @@
+import { FaStar } from "react-icons/fa";
+
 const Statistics = ({
   trackingCount,
   completedCount,
@@ -10,12 +12,40 @@ const Statistics = ({
     <section className="statistics">
       <h2 className="statistics__title">Mes statistiques des jeux suivis</h2>
 
-      <p>Suivis : {trackingCount}</p>
-      <p>Terminés : {completedCount}</p>
-      <p>En cours : {inProgressCount}</p>
-      <p>À jouer : {toPlayCount}</p>
-      <p>Abandonnés : {abandonedCount}</p>
-      <p>Note globale : {averageRating.toFixed(1)} /5</p>
+      <div className="statistics__grid">
+        <div className="statistics__card">
+          <p className="statistics__label">Suivis</p>
+          <p className="statistics__value">{trackingCount}</p>
+        </div>
+
+        <div className="statistics__card">
+          <p className="statistics__label">Terminés</p>
+          <p className="statistics__value">{completedCount}</p>
+        </div>
+
+        <div className="statistics__card">
+          <p className="statistics__label">En cours</p>
+          <p className="statistics__value">{inProgressCount}</p>
+        </div>
+
+        <div className="statistics__card">
+          <p className="statistics__label">À jouer</p>
+          <p className="statistics__value">{toPlayCount}</p>
+        </div>
+
+        <div className="statistics__card">
+          <p className="statistics__label">Abandonnés</p>
+          <p className="statistics__value">{abandonedCount}</p>
+        </div>
+
+        <div className="statistics__card">
+          <p className="statistics__label">Note globale</p>
+          <p className="statistics__value statistics__value--rating">
+            {averageRating.toFixed(1)}
+            <FaStar />
+          </p>
+        </div>
+      </div>
     </section>
   );
 };

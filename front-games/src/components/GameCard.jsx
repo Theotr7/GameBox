@@ -25,10 +25,10 @@ const GameCard = ({
       <div className="game-card__content">
         <h2 className="game-card__title">{game.title}</h2>
         {showReview ? (
-          <>
+          <div className="game-card__review">
             <Rating rating={game.rating} readOnly />
-            <p>{game.review}</p>
-          </>
+            <p className="game-card__review-text">{game.review}</p>
+          </div>
         ) : (
           <>
             <p className="game-card__genre">{game.genre}</p>
@@ -56,15 +56,28 @@ const GameCard = ({
           onFavoriteChange={onFavoriteChange}
         />
       )}
-      {onTrackingEdit && (
-        <button type="button" onClick={onTrackingEdit}>
-          <FaPenToSquare />
-        </button>
-      )}
-      {onTrackingDelete && (
-        <button type="button" onClick={onTrackingDelete}>
-          <FaXmark />
-        </button>
+
+      {(onTrackingEdit || onTrackingDelete) && (
+        <div className="game-card__actions">
+          {onTrackingEdit && (
+            <button
+              className="game-card__action game-card__action--edit"
+              type="button"
+              onClick={onTrackingEdit}
+            >
+              <FaPenToSquare />
+            </button>
+          )}
+          {onTrackingDelete && (
+            <button
+              className="game-card__action game-card__action--delete"
+              type="button"
+              onClick={onTrackingDelete}
+            >
+              <FaXmark />
+            </button>
+          )}
+        </div>
       )}
 
       {onTrackingChange && (

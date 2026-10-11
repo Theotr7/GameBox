@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
+import { FaPenToSquare, FaXmark } from "react-icons/fa6";
 import GameCard from "../components/GameCard";
 import TrackingModal from "../components/TrackingModal";
 import Statistics from "../components/Statistics";
+import Rating from "../components/Rating";
 
 function Profile() {
   const [favoriteGames, setFavoriteGames] = useState([]);
   const [trackingGames, setTrackingGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
+  const [activeFilter, setActiveFilter] = useState("all");
 
   const loadProfileGames = async () => {
     const favorites =
@@ -80,13 +83,26 @@ function Profile() {
     (game) => game.status === "abandoned",
   );
 
-  const reviewedGames = trackingGames.filter((game) => {
-    return (
-      (game.status === "completed" || game.status === "abandoned") &&
-      game.rating !== null &&
-      game.review.trim() !== ""
-    );
-  });
+  const filteredLibraryGames =
+    activeFilter === "favorites"
+      ? favoriteGames
+      : completedGames.filter((game) => {
+          if (activeFilter === "all") {
+            return true;
+          }
+
+          return game.status === activeFilter;
+        });
+
+  const reviewedGames = trackingGames
+    .filter((game) => {
+      return (
+        (game.status === "completed" || game.status === "abandoned") &&
+        game.rating !== null &&
+        game.review.trim() !== ""
+      );
+    })
+    .sort((a, b) => b.rating - a.rating);
 
   const handleFavoriteChange = (gameId, isFavorite) => {
     if (!isFavorite) {
@@ -140,27 +156,11 @@ function Profile() {
         }
       />
 
-      <section className="profile__favorites">
-        <h2 className="profile__subtitle">Mes favoris</h2>
-
-        {favoriteGames.length === 0 ? (
-          <p className="profile__message">Vous n'avez pas encore de favoris.</p>
-        ) : (
-          <div className="profile__favorites-grid">
-            {favoriteGames.map((game) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                showFavorite={true}
-                onFavoriteChange={handleFavoriteChange}
-              />
-            ))}
-          </div>
-        )}
-      </section>
-
       <section className="profile__tracking">
-        <h2 className="profile__subtitle">À compléter</h2>
+        <div className="profile__heading">
+          <h2 className="profile__subtitle">À compléter</h2>
+          <span className="profile__count">{incompleteGames.length}</span>
+        </div>
 
         {incompleteGames.length === 0 ? (
           <p className="profile__message">Vous n'avez aucun jeu à compléter.</p>
@@ -178,80 +178,106 @@ function Profile() {
         )}
       </section>
 
-      <section className="profile__games">
-        <h2 className="profile__subtitle">Terminés</h2>
-        {completedCategory.length === 0 ? (
-          <p className="profile__message">Vous n'avez aucun jeu terminé.</p>
-        ) : (
-          <div className="profile__games-grid">
-            {completedCategory.map((game) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                onTrackingEdit={() => handleTrackingClick(game.id)}
-                onTrackingDelete={() => handleTrackingDelete(game.id)}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      <div className="profile__library">
+        <h2 className="profile__library-title">Ma bibliothèque</h2>
+        <div className="profile__filters">
+          <button
+            className={activeFilter === "all" ? "profile__filter--active" : ""}
+            type="button"
+            onClick={() => setActiveFilter("all")}
+          >
+            Tous
+            <span className="profile__count">{completedGames.length}</span>
+          </button>
 
-      <section className="profile__games">
-        <h2 className="profile__subtitle">En cours</h2>
-        {inProgressCategory.length === 0 ? (
-          <p className="profile__message">Vous n'avez aucun jeu en cours.</p>
-        ) : (
-          <div className="profile__games-grid">
-            {inProgressCategory.map((game) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                onTrackingEdit={() => handleTrackingClick(game.id)}
-                onTrackingDelete={() => handleTrackingDelete(game.id)}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+          <button
+            className={
+              activeFilter === "favorites" ? "profile__filter--active" : ""
+            }
+            type="button"
+            onClick={() => setActiveFilter("favorites")}
+          >
+            Favoris
+            <span className="profile__count">{favoriteGames.length}</span>
+          </button>
 
-      <section className="profile__games">
-        <h2 className="profile__subtitle">À jouer</h2>
-        {toPlayCategory.length === 0 ? (
-          <p className="profile__message">Vous n'avez aucun jeu à jouer.</p>
-        ) : (
-          <div className="profile__games-grid">
-            {toPlayCategory.map((game) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                onTrackingEdit={() => handleTrackingClick(game.id)}
-                onTrackingDelete={() => handleTrackingDelete(game.id)}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+          <button
+            className={
+              activeFilter === "completed" ? "profile__filter--active" : ""
+            }
+            type="button"
+            onClick={() => setActiveFilter("completed")}
+          >
+            Terminés
+            <span className="profile__count">{completedCategory.length}</span>
+          </button>
 
-      <section className="profile__games">
-        <h2 className="profile__subtitle">Abandonnés</h2>
-        {abandonedCategory.length === 0 ? (
-          <p className="profile__message">Vous n'avez aucun jeu abandonnés.</p>
+          <button
+            className={
+              activeFilter === "in-progress" ? "profile__filter--active" : ""
+            }
+            type="button"
+            onClick={() => setActiveFilter("in-progress")}
+          >
+            En cours
+            <span className="profile__count">{inProgressCategory.length}</span>
+          </button>
+
+          <button
+            className={
+              activeFilter === "to-play" ? "profile__filter--active" : ""
+            }
+            type="button"
+            onClick={() => setActiveFilter("to-play")}
+          >
+            À jouer
+            <span className="profile__count">{toPlayCategory.length}</span>
+          </button>
+
+          <button
+            className={
+              activeFilter === "abandoned" ? "profile__filter--active" : ""
+            }
+            type="button"
+            onClick={() => setActiveFilter("abandoned")}
+          >
+            Abandonnés
+            <span className="profile__count">{abandonedCategory.length}</span>
+          </button>
+        </div>
+
+        {filteredLibraryGames.length === 0 ? (
+          <p className="profile__message">Aucun jeu dans cette catégorie.</p>
         ) : (
           <div className="profile__games-grid">
-            {abandonedCategory.map((game) => (
+            {filteredLibraryGames.map((game) => (
               <GameCard
                 key={game.id}
                 game={game}
-                onTrackingEdit={() => handleTrackingClick(game.id)}
-                onTrackingDelete={() => handleTrackingDelete(game.id)}
+                showFavorite={activeFilter === "favorites"}
+                onFavoriteChange={handleFavoriteChange}
+                onTrackingEdit={
+                  activeFilter !== "favorites"
+                    ? () => handleTrackingClick(game.id)
+                    : undefined
+                }
+                onTrackingDelete={
+                  activeFilter !== "favorites"
+                    ? () => handleTrackingDelete(game.id)
+                    : undefined
+                }
               />
             ))}
           </div>
         )}
-      </section>
+      </div>
 
       <section className="profile__reviews">
-        <h2 className="profile__subtitle">Mes notes & avis</h2>
+        <div className="profile__heading">
+          <h2 className="profile__subtitle">Mes notes & avis</h2>
+          <span className="profile__count">{reviewedGames.length}</span>
+        </div>
+
         {reviewedGames.length === 0 ? (
           <p className="profile__message">
             Vous n'avez pas encore de jeux notés et avec un avis.
@@ -259,13 +285,39 @@ function Profile() {
         ) : (
           <div className="profile__review-grid">
             {reviewedGames.map((game) => (
-              <GameCard
-                key={game.id}
-                game={game}
-                showReview={true}
-                onTrackingEdit={() => handleTrackingClick(game.id)}
-                onTrackingDelete={() => handleTrackingDelete(game.id)}
-              />
+              <article className="profile__review-card" key={game.id}>
+                <img
+                  className="profile__review-image"
+                  src={`http://localhost:3000${game.image}`}
+                  alt={game.title}
+                />
+
+                <div className="profile__review-content">
+                  <h3 className="profile__review-title">{game.title}</h3>
+
+                  <Rating rating={game.rating} readOnly={true} />
+
+                  <p className="profile__review-text">{game.review}</p>
+                </div>
+
+                <div className="profile__review-actions">
+                  <button
+                    className="profile__review-edit"
+                    type="button"
+                    onClick={() => handleTrackingClick(game.id)}
+                  >
+                    <FaPenToSquare />
+                  </button>
+
+                  <button
+                    className="profile__review-delete"
+                    type="button"
+                    onClick={() => handleTrackingDelete(game.id)}
+                  >
+                    <FaXmark />
+                  </button>
+                </div>
+              </article>
             ))}
           </div>
         )}

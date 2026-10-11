@@ -1,0 +1,88 @@
+/*-----------------------------------------
+STATISTICS
+------------------------------------------*/
+
+/* ── MOBILE ── */
+
+.statistics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.statistics__title {
+  width: fit-content;
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  line-height: 1.6;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.statistics__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.statistics__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-sm);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-small);
+}
+
+.statistics__label {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.statistics__value {
+  color: var(--color-primary-light);
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.statistics__value--rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.statistics__value--rating svg {
+  color: var(--color-rating);
+  font-size: 1.5rem;
+}
+
+/* ── TABLET ≥ 48em ── */
+
+@media (min-width: 48em) {
+  .statistics__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .statistics__value {
+    font-size: 2.3rem;
+  }
+}
+
+/* ── DESKTOP ≥ 64em ── */
+
+@media (min-width: 64em) {
+  .statistics__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .statistics__card {
+    border-radius: var(--radius-large );
+  }
+}

@@ -76,9 +76,62 @@ GAME CARD
   line-height: 1.5;
 }
 
-.game-card > .favorite-button--icon {
+.game-card>.favorite-button--icon {
   position: absolute;
   top: var(--space-xs);
   right: var(--space-xs);
   z-index: 1;
+}
+
+/*-----------------------------------------
+GAME CARD ACTIONS
+------------------------------------------*/
+
+.game-card__actions {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  right: var(--space-xs);
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  color: var(--color-text);
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(11, 11, 18, 0.85);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.game-card__action svg {
+  width: 16px;
+  height: 16px;
+}
+
+.game-card__action--delete {
+  margin-left: auto;
+}
+
+.game-card__action--edit:hover {
+  color: var(--color-edit);
+  background-color: var(--color-surface-light);
+  transform: translateY(-2px);
+}
+
+.game-card__action--delete:hover {
+  color: var(--color-danger);
+  background-color: var(--color-surface-light);
+  transform: translateY(-2px);
 }
