@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import GameCard from "../components/GameCard";
 
+//Page liste des jeux avec recherche, filtres et tris
 const Games = () => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,6 +12,7 @@ const Games = () => {
   const [selectedDeveloper, setSelectedDeveloper] = useState("");
   const [selectedSort, setSelectedSort] = useState("");
 
+  //Récupère la liste des jeux de l'API et gère le chargement
   const fetchGames = async () => {
     try {
       const response = await fetch("http://localhost:3000/games");
@@ -32,12 +34,15 @@ const Games = () => {
     fetchGames();
   }, []);
 
+  //Récupère genres et studios disponibles sans doublons
   const availableGenres = [...new Set(games.map((game) => game.genre))].sort();
 
   const availableDevelopers = [
     ...new Set(games.map((game) => game.developer)),
   ].sort();
 
+  //Filtre les jeux selon la recherche saisie,
+  //le genre et le studio sélectionnés
   const filteredGames = games.filter(
     (game) =>
       game.title.toLowerCase().includes(search.trim().toLowerCase()) &&
@@ -45,6 +50,7 @@ const Games = () => {
       (!selectedDeveloper || game.developer === selectedDeveloper),
   );
 
+  //Trie croissant/décroissant des jeux filtrés par titre ou par date de sortie
   const sortedGames = [...filteredGames];
 
   if (selectedSort === "title-asc") {

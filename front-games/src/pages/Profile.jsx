@@ -5,12 +5,16 @@ import TrackingModal from "../components/TrackingModal";
 import Statistics from "../components/Statistics";
 import Rating from "../components/Rating";
 
+//Page de l'espace personnel: gestion favoris, suivi,
+// bibliothèque, statistiques, notes & avis
 function Profile() {
   const [favoriteGames, setFavoriteGames] = useState([]);
   const [trackingGames, setTrackingGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
 
+  //Récupère favoris et suivis du localStorage
+  //Associe données aux informations des jeux provenant de l'API
   const loadProfileGames = async () => {
     const favorites =
       JSON.parse(localStorage.getItem("gamebox_favorites")) || [];
@@ -41,10 +45,13 @@ function Profile() {
     setTrackingGames(filteredTrackingGames);
   };
 
+  //Charge données espace personnel au chargement
   useEffect(() => {
     loadProfileGames();
   }, []);
 
+  //Sélectionne les jeux dont le suivi doit etre complété
+  //Les jeux terminés ou abandonnés nécessitent une note & avis
   const incompleteGames = trackingGames.filter((game) => {
     if (game.status === "") {
       return true;
@@ -56,6 +63,8 @@ function Profile() {
     return false;
   });
 
+  //Sélectionne les jeux dont le suivi à été complété
+  //Les affiches dans la bibliothèque
   const completedGames = trackingGames.filter((game) => {
     if (game.status === "") {
       return false;
@@ -67,6 +76,7 @@ function Profile() {
     return true;
   });
 
+  //Répartit les jeux dans la bibliothèque selon leur status
   const completedCategory = completedGames.filter(
     (game) => game.status === "completed",
   );
@@ -83,6 +93,7 @@ function Profile() {
     (game) => game.status === "abandoned",
   );
 
+  //Filtre la bibliothèque selon le bouton sélectionné
   const filteredLibraryGames =
     activeFilter === "favorites"
       ? favoriteGames
@@ -94,6 +105,8 @@ function Profile() {
           return game.status === activeFilter;
         });
 
+  //Récupère les jeux notés et avec un avis puis les tris
+  // de la meilleure note à la moins bonne
   const reviewedGames = trackingGames
     .filter((game) => {
       return (
@@ -104,18 +117,22 @@ function Profile() {
     })
     .sort((a, b) => b.rating - a.rating);
 
+  //Retire immédiatement un favori au click
   const handleFavoriteChange = (gameId, isFavorite) => {
     if (!isFavorite) {
       setFavoriteGames((games) => games.filter((game) => game.id !== gameId));
     }
   };
 
+  //Ouvre la modale de suivi au click
   const handleTrackingClick = (gameId) => {
     const game = trackingGames.find((game) => game.id === gameId);
 
     setSelectedGame(game);
   };
 
+  //Demande de confirmation pour supprimer un suivi du localStorage
+  //puis actualise le profile
   const handleTrackingDelete = (gameId) => {
     const confirmation = window.confirm(
       "Êtes-vous sûr de vouloir retirer ce jeu de votre suivi ?",
@@ -135,6 +152,7 @@ function Profile() {
     loadProfileGames();
   };
 
+  //Ferme la modale de suivi en réinitialisant le jeu sélectionné
   const handleCloseTrackingModal = () => {
     setSelectedGame(null);
   };

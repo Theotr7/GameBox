@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Rating from "./Rating";
 
+//Modale permettant de Completer/Modifier les informations du suivi d'un jeu
 const TrackingModal = ({ game, onClose, onSave }) => {
   const [status, setStatus] = useState("");
   const [rating, setRating] = useState(null);
   const [review, setReview] = useState("");
 
+  //Récupère les informations déjà enregistrées pour completer/modifier
   useEffect(() => {
     const tracking = JSON.parse(localStorage.getItem("gamebox_tracking")) || [];
 
@@ -20,6 +22,7 @@ const TrackingModal = ({ game, onClose, onSave }) => {
     }
   }, [game.id]);
 
+  //Met à jour le localStorage et ferme la fenêtre
   const handleSave = () => {
     const tracking = JSON.parse(localStorage.getItem("gamebox_tracking")) || [];
 
@@ -45,7 +48,6 @@ const TrackingModal = ({ game, onClose, onSave }) => {
       <div className="tracking-modal__content">
         <h2 className="tracking-modal__title">Modifier mon suivi</h2>
         <p className="tracking-modal__game-title">{game.title}</p>
-
         <div className="tracking-modal__field">
           <label className="tracking-modal__label" htmlFor="game-status">
             Statut
@@ -65,6 +67,8 @@ const TrackingModal = ({ game, onClose, onSave }) => {
           </select>
         </div>
 
+        {/*La note et l'avis sont visibles quand le status est à "terminé" ou
+        "abandonné"*/}
         {(status === "completed" || status === "abandoned") && (
           <>
             <div className="tracking-modal__field">
@@ -86,7 +90,6 @@ const TrackingModal = ({ game, onClose, onSave }) => {
             </div>
           </>
         )}
-
         <div className="tracking-modal__actions">
           <button
             className="button button--secondary"

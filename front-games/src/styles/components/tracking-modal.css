@@ -70,7 +70,6 @@ TRACKING MODAL FIELDS
   background-color: var(--color-surface-light);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-medium);
-  font: inherit;
 }
 
 .tracking-modal__textarea {

@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
+//Bouton ajouter/supprimer un jeu des favoris
 const FavoriteButton = ({ gameId, variant, onFavoriteChange }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
+  //Verification si jeu déjà présent dans "gamebox_favorites" au chargement
   useEffect(() => {
     const favorites =
       JSON.parse(localStorage.getItem("gamebox_favorites")) || [];
     setIsFavorite(favorites.includes(gameId));
   }, [gameId]);
 
+  //Ajouter/supprimer jeu des favoris au click
   const handleFavorite = () => {
     const favorites =
       JSON.parse(localStorage.getItem("gamebox_favorites")) || [];

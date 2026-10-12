@@ -1,5 +1,6 @@
 import { FaStar, FaRegStar } from "react-icons/fa";
 
+//Affiche note sur 5 en étoiles uniquement cliquable lors de la modale de suivi
 const Rating = ({ rating, onRatingChange, readOnly }) => {
   return (
     <div className="rating">

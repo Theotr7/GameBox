@@ -19,9 +19,6 @@ RATING
 
 .rating__button {
   padding: 4px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
   transition: transform var(--transition-fast);
 }
 

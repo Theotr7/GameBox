@@ -1,5 +1,7 @@
 import { FaStar } from "react-icons/fa";
 
+//Affiche les statistiques de l'espace personnel
+//Les valeurs sont calculées dans Profile et transmises via les props
 const Statistics = ({
   trackingCount,
   completedCount,

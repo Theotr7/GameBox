@@ -115,7 +115,6 @@ PROFILE FILTERS
   background-color: var(--color-surface-light);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-medium);
-  cursor: pointer;
   transition: var(--transition-fast);
 }
 
@@ -210,7 +209,6 @@ PROFILE REVIEW
   background-color: var(--color-surface-light);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-small);
-  cursor: pointer;
   transition: var(--transition-fast);
 }
 
@@ -275,10 +273,6 @@ PROFILE REVIEW
   .profile__tracking-grid,
   .profile__games-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .profile__review-card {
-    padding: var(--space-sm);
   }
 
   .profile__review-image {

@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import GameCard from "../components/GameCard";
 
+//Page d'accueil présentant les jeux récents, à découvrir
+// et l'espace personnel
 function Home() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  //Récupère la liste des jeux de l'API et gère le chargement
   const fetchGames = async () => {
     try {
       const response = await fetch("http://localhost:3000/games");
@@ -28,10 +31,12 @@ function Home() {
     fetchGames();
   }, []);
 
+  //Trie les jeux par date de sortie décroissante
   const recentGames = [...games]
     .sort((a, b) => b.releaseDate.localeCompare(a.releaseDate))
     .slice(0, 5);
 
+  //Sélectionne 5 jeux aléatoirement
   const discoverGames = [...games].sort(() => Math.random() - 0.5).slice(0, 5);
 
   return (

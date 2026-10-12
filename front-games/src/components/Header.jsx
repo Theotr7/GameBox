@@ -7,7 +7,7 @@ const Header = () => {
         <img className="header__logo-image" src="/images/gamebox-logo.png" alt="" />
         <span>GameBox</span>
       </Link>
-      <div className="header__navigation">
+      <nav className="header__navigation">
         <Link className="header__link" to="/">
           Accueil
         </Link>
@@ -19,7 +19,7 @@ const Header = () => {
         <Link className="header__link" to="/profile">
           Mon espace
         </Link>
-      </div>
+      </nav>
     </header>
   );
 };

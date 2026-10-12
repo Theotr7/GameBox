@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-// import "../styles/components/forms.css";
 
+//Formulaire utilisé pour ajouter/modifier un jeu
+//Champs pré-remplis quand un id est présent dans l'URL
 const GameForm = () => {
   const { id } = useParams();
 
@@ -26,6 +27,8 @@ const GameForm = () => {
     banner: "",
   });
 
+  //Vérifie en temps réel si un champ obligatoire est vide
+  //Met à jour uniquement le message d'erreur du champ concerné
   const validateField = (field, value) => {
     if (value.trim() === "") {
       setErrors((errors) => ({
@@ -40,8 +43,11 @@ const GameForm = () => {
     }
   };
 
+  //Détermnie si le formulaire est en mode ajout ou modification
   const isEdit = Boolean(id);
 
+  //Récupère les données du jeu à modifier depuis l'API
+  //et pré-rempli les champs
   const fetchGame = async () => {
     const response = await fetch(`http://localhost:3000/games/${id}`);
     const data = await response.json();
@@ -55,12 +61,16 @@ const GameForm = () => {
     setBanner(data.banner);
   };
 
+  //Charge les informations du jeu uniquement en mode modification
   useEffect(() => {
     if (isEdit) {
       fetchGame();
     }
   }, [id, isEdit]);
 
+  //Vérifie tous les champs avant l'envoi du formulaire
+  //POST en mode ajout / PUT en mode modification
+  //Redirige selon le mode
   const handleSubmit = async (event) => {
     event.preventDefault();
 

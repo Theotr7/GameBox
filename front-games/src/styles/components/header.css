@@ -86,8 +86,4 @@ HEADER
     align-items: center;
     padding: var(--space-md) var(--space-lg);
   }
-
-  .header__navigation {
-    gap: var(--space-lg);
-  }
 }

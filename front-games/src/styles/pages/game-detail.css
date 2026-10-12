@@ -31,6 +31,16 @@ GAME DETAIL
   object-fit: cover;
 }
 
+.game-detail__message {
+  padding: var(--space-md);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.game-detail__message--error {
+  color: var(--color-danger);
+}
+
 /*-----------------------------------------
 CONTENT
 ------------------------------------------*/
@@ -129,7 +139,6 @@ ACTIONS
 
 @media (min-width: 64em) {
   .game-detail {
-    max-width: var(--container-width);
     padding: var(--space-xl) var(--space-md);
   }
 

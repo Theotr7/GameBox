@@ -4,6 +4,8 @@ import TrackingButton from "./TrackingButton";
 import Rating from "./Rating";
 import { FaPenToSquare, FaXmark } from "react-icons/fa6";
 
+// Card réutilisable affichant les information d'un jeu
+// Son contenu et ses actions s'adaptent aux propriétés reçues
 const GameCard = ({
   game,
   showFavorite,
@@ -14,6 +16,7 @@ const GameCard = ({
   onTrackingDelete,
   onClick,
 }) => {
+  //Contenu commun à la card et au bouton personnalisé
   const cardContent = (
     <>
       <img
@@ -38,6 +41,7 @@ const GameCard = ({
       </div>
     </>
   );
+  //Affiche les actions disponibles selon les propriétés transmises
   return (
     <div className="game-card">
       {onClick ? (

@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 
+//// Bouton ajouter/supprimer un jeu des suivis
 const TrackingButton = ({ gameId, onTrackingChange }) => {
   const [isTracking, setIsTracking] = useState(false);
 
+  //Ajouter un suivi à completer ou supprime le suivi existant
   useEffect(() => {
     const tracking = JSON.parse(localStorage.getItem("gamebox_tracking")) || [];
 

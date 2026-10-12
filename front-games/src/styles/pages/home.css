@@ -165,20 +165,14 @@ HOME TRACKING
     font-size: 1.1rem;
   }
 
-  .home__recent {
+  .home__recent,
+  .home__discover,
+  .home__tracking {
     padding: var(--space-lg) var(--space-md);
   }
 
   .home__games-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .home__discover {
-    padding: var(--space-lg) var(--space-md);
-  }
-
-  .home__tracking {
-    padding: var(--space-lg) var(--space-md);
   }
 
   .home__tracking-content {

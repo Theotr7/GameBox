@@ -3,19 +3,20 @@ import { Link, useParams, useNavigate } from "react-router";
 import { FaPenToSquare, FaTrash } from "react-icons/fa6";
 import FavoriteButton from "../components/FavoriteButton";
 import TrackingButton from "../components/TrackingButton";
-// import "../styles/components/detail.css";
 
+//Page affichant les informations détaillées d'un jeu
+//Permet aussi de gérer les favoris, le suivi et le CRUD
 const GameDetail = () => {
   const { id } = useParams();
-
   const [game, setGame] = useState(null);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  //Confimation pour supprimer + méthode pour supprimer
+  //Demande de confirmation pour supprimer jeu de l'API.
   const handleDelete = async () => {
     const confirmation = window.confirm(
-      "Êtes-vous sur de vouloir supprimer ce jeu ?",
+      "Êtes-vous sûr de vouloir supprimer ce jeu ?",
     );
     if (!confirmation) {
       return;
@@ -29,18 +30,38 @@ const GameDetail = () => {
     }
   };
 
+  //Récupère informations du jeu sélectionné via son id
   const fetchGame = async () => {
-    const response = await fetch(`http://localhost:3000/games/${id}`);
-    const data = await response.json();
-    setGame(data);
+    try {
+      const response = await fetch(`http://localhost:3000/games/${id}`);
+
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+      setGame(data);
+    } catch (error) {
+      setError("Impossible de récupérer le jeu");
+    } finally {
+      setLoading(false);
+    }
   };
 
+  //Recharge les informations lorsqu'on consulte un autre jeu
   useEffect(() => {
     fetchGame();
   }, [id]);
 
-  if (!game) {
-    return <p>Chargement...</p>;
+  if (loading) {
+    return <p className="game-detail__message">Chargement du jeu...</p>;
+  }
+
+  if (error) {
+    return (
+      <p className="game-detail__message game-detail__message--error">
+        {error}
+      </p>
+    );
   }
 
   return (
@@ -90,10 +111,7 @@ const GameDetail = () => {
             <TrackingButton gameId={game.id} />
             <FavoriteButton gameId={game.id} variant="text" />
 
-            <Link
-              className="button button--edit"
-              to={`/games/${game.id}/edit`}
-            >
+            <Link className="button button--edit" to={`/games/${game.id}/edit`}>
               <FaPenToSquare />
               Modifier
             </Link>
