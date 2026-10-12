@@ -1,0 +1,209 @@
+/*-----------------------------------------
+HOME
+------------------------------------------*/
+
+/* ── MOBILE ── */
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+.home__hero {
+  display: flex;
+  align-items: flex-end;
+  min-height: 400px;
+  padding: var(--space-md) var(--space-sm);
+  background-image: linear-gradient(to bottom,
+      rgba(11, 11, 18, 0.15) 0%,
+      rgba(11, 11, 18, 0.7) 60%,
+      var(--color-background) 100%),
+    url("/images/hero.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.home__hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  max-width: var(--container-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.home__hero-title {
+  color: var(--color-text-heading);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.home__description {
+  max-width: 500px;
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.home__button {
+  display: inline-block;
+  padding: 12px var(--space-md);
+  color: var(--color-text-heading);
+  font-weight: bold;
+  background-color: var(--color-primary-dark);
+  border-radius: var(--radius-medium);
+  transition: var(--transition-fast);
+}
+
+.home__button:hover {
+  background-color: var(--color-primary);
+}
+
+/*-----------------------------------------
+HOME RECENT
+------------------------------------------*/
+
+.home__recent {
+  padding: var(--space-lg) var(--space-sm);
+}
+
+.home__container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.home__recent-title {
+  width: fit-content;
+  margin-bottom: var(--space-md);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.home__games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.home__message {
+  padding: var(--space-md);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.home__message--error {
+  color: var(--color-danger);
+}
+
+/*-----------------------------------------
+HOME DISCOVER
+------------------------------------------*/
+
+.home__discover {
+  padding: var(--space-lg) var(--space-sm);
+}
+
+.home__discover-title {
+  width: fit-content;
+  margin-bottom: var(--space-md);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/*-----------------------------------------
+HOME TRACKING
+------------------------------------------*/
+
+.home__tracking {
+  padding: var(--space-lg) var(--space-sm);
+}
+
+.home__tracking-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+}
+
+.home__tracking-title {
+  width: fit-content;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.home__tracking-description {
+  max-width: 650px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ── TABLET ≥ 48em ── */
+
+@media (min-width: 48em) {
+  .home__hero {
+    min-height: 500px;
+    padding: var(--space-lg) var(--space-md);
+    padding-bottom: 70px;
+  }
+
+  .home__hero-title {
+    max-width: 650px;
+    font-size: 2.8rem;
+  }
+
+  .home__description {
+    font-size: 1.1rem;
+  }
+
+  .home__recent {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .home__games-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home__discover {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .home__tracking {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .home__tracking-content {
+    padding: var(--space-lg);
+  }
+}
+
+/* ── DESKTOP ≥ 64em ── */
+
+@media (min-width: 64em) {
+  .home__hero {
+    min-height: 600px;
+    padding: var(--space-xl) var(--space-md);
+    padding-bottom: 100px;
+  }
+
+  .home__hero-title {
+    font-size: 3.1rem;
+  }
+
+  .home__games-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .home__tracking-content {
+    padding: var(--space-xl);
+  }
+}
